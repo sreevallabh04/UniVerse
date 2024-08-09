@@ -1,0 +1,46 @@
+<div>
+    <p class="text" data-text="UniVerse">
+      UniVerse
+    </p>
+</div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&family=Teko:wght@300..700&display=swap');
+body{
+  margin:0;
+  height:100vh;
+  display:grid;
+  place-items:center;
+  background-color:#131313;
+}
+
+.text{
+    font-family: 'Teko', sans-serif;
+    font-size: 70px;
+    -webkit-text-stroke: 1px #eee;
+    color: transparent;
+    letter-spacing: 10px;
+    position: relative;
+}
+
+.text::before {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #ff7a00;
+    -webkit-text-stroke: 3px #ff7a00;
+    width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #ff7a00;
+    animation: text-fill 2s ease-in-out alternate infinite;
+}
+
+
+@keyframes text-fill {
+    100% {
+        width: 100%;
+    }
+}
+</style>
