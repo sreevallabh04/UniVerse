@@ -8,13 +8,13 @@ import 'package:provider/provider.dart';
 import 'domain/authentication_provider.dart'; // Import your provider
 import 'views/splash_screen.dart';
 import 'views/home_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
     ChangeNotifierProvider(
-      create: (context) =>
-          AuthenticationProvider(), // Initialize your provider here
+      create: (_) => AuthenticationProvider(), // Initialize your provider here
       builder: (context, child) {
         return MyApp();
       },
@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
                 if (snapshot.hasData && snapshot.data!) {
                   return HomeScreen();
                 } else {
-                  return LoginPage();
+                  return SplashScreen();
                 }
               }
             },

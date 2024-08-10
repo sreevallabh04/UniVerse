@@ -1,6 +1,9 @@
+import 'package:application/domain/authentication_provider.dart';
 import 'package:application/views/home_screen.dart';
 import 'package:application/views/htmlWidget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -11,13 +14,26 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Navigate to the next screen after 4 seconds
-    Future.delayed(Duration(seconds: 4), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) =>
-            HomeScreen(), // Replace with your home screen widget
-      ));
-    });
+    // Start the login process after 3 seconds
+    Future.delayed(Duration(seconds: 3), login);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<void> login() async {
+    try {
+      AuthenticationProvider authenticationProvider =
+          Provider.of<AuthenticationProvider>(context, listen: false);
+      await authenticationProvider.signInWithGoogle(context);
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => HomeScreen()),
+          (Route route) => false);
+    } catch (e) {
+      // Handle error (e.g., show a message or stay on the splash screen)
+    }
   }
 
   @override
