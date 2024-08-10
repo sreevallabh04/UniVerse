@@ -1,9 +1,11 @@
 import 'package:application/domain/authentication_provider.dart';
 import 'package:application/views/home_screen.dart';
 import 'package:application/views/htmlWidget.dart';
+// ignore: unused_import
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart'; // Import for SystemNavigator
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -27,13 +29,36 @@ class _SplashScreenState extends State<SplashScreen> {
     try {
       AuthenticationProvider authenticationProvider =
           Provider.of<AuthenticationProvider>(context, listen: false);
-      await authenticationProvider.signInWithGoogle(context);
-      Navigator.of(context).pushAndRemoveUntil(
+      UserCredential? userCredential =
+          await authenticationProvider.signInWithGoogle(context);
+
+      if (userCredential != null) {
+        // User successfully signed in
+        Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => HomeScreen()),
-          (Route route) => false);
+          (Route route) => false,
+        );
+      } else {
+        // Sign-in failed or was cancelled, close the app
+        _showErrorMessage("Sign-in failed. The app will now close.");
+        Future.delayed(Duration(seconds: 2), () {
+          SystemNavigator.pop();
+        });
+      }
     } catch (e) {
-      // Handle error (e.g., show a message or stay on the splash screen)
+      // Handle exceptions during sign-in
+      print('Error during sign-in: $e');
+      _showErrorMessage("An error occurred. The app will now close.");
+      Future.delayed(Duration(seconds: 2), () {
+        SystemNavigator.pop();
+      });
     }
+  }
+
+  void _showErrorMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
