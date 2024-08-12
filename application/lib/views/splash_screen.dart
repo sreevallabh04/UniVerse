@@ -5,7 +5,6 @@ import 'package:application/views/htmlWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/services.dart'; // Import for SystemNavigator
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -39,19 +38,13 @@ class _SplashScreenState extends State<SplashScreen> {
           (Route route) => false,
         );
       } else {
-        // Sign-in failed or was cancelled, close the app
-        _showErrorMessage("Sign-in failed. The app will now close.");
-        Future.delayed(Duration(seconds: 2), () {
-          SystemNavigator.pop();
-        });
+        // Sign-in failed or was cancelled, handle accordingly
+        _showErrorMessage("Sign-in failed. Please try again.");
       }
     } catch (e) {
       // Handle exceptions during sign-in
       print('Error during sign-in: $e');
-      _showErrorMessage("An error occurred. The app will now close.");
-      Future.delayed(Duration(seconds: 2), () {
-        SystemNavigator.pop();
-      });
+      _showErrorMessage("An error occurred. Please try again.");
     }
   }
 
