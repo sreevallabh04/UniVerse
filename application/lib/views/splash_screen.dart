@@ -1,12 +1,12 @@
 import 'package:application/domain/authentication_provider.dart';
 import 'package:application/views/home_screen.dart';
 import 'package:application/views/htmlWidget.dart';
-// ignore: unused_import
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     // Start the login process after 3 seconds
-    Future.delayed(Duration(seconds: 3), login);
+    Future.delayed(const Duration(seconds: 3), login);
   }
 
   @override
@@ -28,19 +28,15 @@ class _SplashScreenState extends State<SplashScreen> {
     try {
       AuthenticationProvider authenticationProvider =
           Provider.of<AuthenticationProvider>(context, listen: false);
-      UserCredential? userCredential =
-          await authenticationProvider.signInWithGoogle(context);
 
-      if (userCredential != null) {
-        // User successfully signed in
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => HomeScreen()),
-          (Route route) => false,
-        );
-      } else {
-        // Sign-in failed or was cancelled, handle accordingly
-        _showErrorMessage("Sign-in failed. Please try again.");
-      }
+      // Start the Google sign-in process
+      await authenticationProvider.signInWithGoogle(context);
+
+      // Navigate to HomeScreen after successful sign-in
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const HomeScreen()),
+        (Route route) => false,
+      );
     } catch (e) {
       // Handle exceptions during sign-in
       print('Error during sign-in: $e');
@@ -62,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     return Scaffold(
       backgroundColor: isDarkMode ? Colors.black : Colors.white,
-      body: Center(child: AnimatedTextWidget(text: "UniVerse")),
+      body: const Center(child: AnimatedTextWidget(text: "UniVerse")),
     );
   }
 }
