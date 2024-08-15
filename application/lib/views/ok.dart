@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(ScheduleApp());
+  runApp(const ScheduleApp());
 }
 
 class ScheduleApp extends StatelessWidget {
+  const ScheduleApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: ScheduleScreen(),
       debugShowCheckedModeBanner: false,
     );
@@ -15,6 +17,8 @@ class ScheduleApp extends StatelessWidget {
 }
 
 class ScheduleScreen extends StatefulWidget {
+  const ScheduleScreen({super.key});
+
   @override
   _ScheduleScreenState createState() => _ScheduleScreenState();
 }
@@ -28,7 +32,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Center(
+        title: const Center(
           child: Text(
             'April',
             style: TextStyle(
@@ -39,12 +43,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.grey),
           onPressed: () {},
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.arrow_forward_ios, color: Colors.grey),
+            icon: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
             onPressed: () {},
           ),
         ],
@@ -83,10 +87,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 }),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: ListView(
-                children: [
+                children: const [
                   TimeSlot(
                     color: Colors.orange,
                     subject: "Math",
@@ -121,7 +125,7 @@ class DateCard extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  const DateCard({
+  const DateCard({super.key, 
     required this.day,
     required this.weekday,
     required this.isSelected,
@@ -133,7 +137,7 @@ class DateCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         decoration: BoxDecoration(
           color: isSelected ? Colors.teal : Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -175,7 +179,7 @@ class TimeSlot extends StatelessWidget {
   final String time;
   final String teachers;
 
-  const TimeSlot({
+  const TimeSlot({super.key, 
     required this.color,
     required this.subject,
     required this.time,
@@ -185,8 +189,8 @@ class TimeSlot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(10),
@@ -199,31 +203,31 @@ class TimeSlot extends StatelessWidget {
             radius: 20,
             child: Icon(Icons.person, color: color),
           ),
-          SizedBox(width: 20),
+          const SizedBox(width: 20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 subject,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(
                 teachers,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white70,
                 ),
               ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           Text(
             time,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
             ),
           ),

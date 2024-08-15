@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:provider/provider.dart';
 import 'domain/authentication_provider.dart'; // Import your provider
 import 'views/splash_screen.dart';
@@ -14,20 +15,22 @@ void main() async {
     ChangeNotifierProvider(
       create: (_) => AuthenticationProvider(), // Initialize your provider here
       builder: (context, child) {
-        return MyApp();
+        return const MyApp();
       },
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'UniVerse',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           titleLarge: TextStyle(
             fontFamily: 'KairosPro',
             fontSize: 24,
@@ -39,13 +42,13 @@ class MyApp extends StatelessWidget {
           ),
         ),
         scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
         ),
-        buttonTheme: ButtonThemeData(
+        buttonTheme: const ButtonThemeData(
           buttonColor: Colors.blue,
         ),
-        inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(),
         ),
       ),
@@ -55,16 +58,19 @@ class MyApp extends StatelessWidget {
             future: authProvider.isUserSignedIn(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Scaffold(
+                return const Scaffold(
                   body: Center(
-                    child: CircularProgressIndicator(),
+                    child: LoadingIndicator(
+                      indicatorType: Indicator.pacman,
+                      colors: [Colors.deepPurple],
+                    ),
                   ),
                 );
               } else {
                 if (snapshot.hasData && snapshot.data!) {
-                  return HomeScreen();
+                  return const HomeScreen();
                 } else {
-                  return SplashScreen();
+                  return const SplashScreen();
                 }
               }
             },
